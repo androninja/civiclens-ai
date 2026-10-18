@@ -2,11 +2,12 @@
 
 [![AI Builder Cup 2026](https://img.shields.io/badge/Hackathon-AI%20Builder%20Cup%202026-blue.svg)](https://aistudiogala.devpost.com/)
 [![Category](https://img.shields.io/badge/Category-Sustainability%20%26%20Social%20Impact-brightgreen.svg)]()
+[![GitHub](https://img.shields.io/badge/GitHub-androninja%2Fciviclens--ai-181717.svg?logo=github)](https://github.com/androninja/civiclens-ai)
 [![Backend](https://img.shields.io/badge/Backend-ASP.NET%20Core%208%20Web%20API-512BD4.svg)](https://dotnet.microsoft.com/)
 [![Frontend](https://img.shields.io/badge/Frontend-Angular%2019%20%7C%20Material-DD0031.svg)](https://angular.dev/)
 [![AI Model](https://img.shields.io/badge/AI-Google%20Gemini%201.5%20%2F%202.0-4285F4.svg)](https://aistudio.google.com/)
-[![Tests](https://img.shields.io/badge/Tests-21%20xUnit%20%7C%2010%20Playwright-success.svg)]()
-[![Cloud](https://img.shields.io/badge/Cloud-Google%20Cloud%20Run%20%26%20Cloud%20SQL-orange.svg)](https://cloud.google.com/run)
+[![Tests](https://img.shields.io/badge/Tests-35%20xUnit%20%7C%2020%20Playwright-success.svg)]()
+[![Cloud](https://img.shields.io/badge/Cloud-Google%20Cloud%20Run%20%26%20Firebase-orange.svg)](https://cloud.google.com/run)
 
 ---
 
@@ -213,9 +214,11 @@ civiclens-ai/
 - **.NET 8.0 SDK** (or run `source env.sh` if using bundled portable tools)
 - **Node.js 20+** & **npm 10+**
 
-### Step 1: Environment Setup
-Clone the repository and inspect the environment settings:
+### Step 1: Clone Repository & Environment Setup
 ```bash
+git clone https://github.com/androninja/civiclens-ai.git
+cd civiclens-ai
+
 cp .env.example .env
 # Optional: Set your Gemini API key in .env or appsettings.json
 # export GEMINI_API_KEY="AIzaSy..."
