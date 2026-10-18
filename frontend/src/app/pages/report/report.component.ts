@@ -135,11 +135,21 @@ import { EmergencyHelpline } from '../../models/case.model';
               </div>
             }
 
-            <!-- Camera Error Banner -->
+            <!-- Media / Camera Error Banner -->
             @if (cameraError()) {
-              <div class="alert-banner warning">
-                <span class="material-icons-round">videocam_off</span>
-                <span>{{ cameraError() }}</span>
+              <div class="alert-banner warning media-upload-error-box">
+                <span class="material-icons-round alert-icon">
+                  {{ cameraError()?.includes('2 MB') ? 'warning' : 'videocam_off' }}
+                </span>
+                <div class="alert-content-wrap">
+                  @if (cameraError()?.includes('2 MB')) {
+                    <strong class="alert-heading">Image Size Limit Exceeded (Max 2 MB)</strong>
+                  }
+                  <span class="alert-text">{{ cameraError() }}</span>
+                </div>
+                <button type="button" class="btn-alert-close" (click)="cameraError.set(null)" title="Dismiss">
+                  <span class="material-icons-round">close</span>
+                </button>
               </div>
             }
 
@@ -162,7 +172,12 @@ import { EmergencyHelpline } from '../../models/case.model';
                   }
                 </div>
                 <div class="image-meta-bar">
-                  <span class="filename">{{ photoFileName() }}</span>
+                  <span class="filename">
+                    {{ photoFileName() }}
+                    @if (photoFile) {
+                      <span class="filesize-tag">({{ (photoFile.size / (1024 * 1024)).toFixed(2) }} MB)</span>
+                    }
+                  </span>
                   <div class="preview-actions">
                     <button type="button" class="btn btn-secondary btn-sm" (click)="triggerFileInput()">
                       <span class="material-icons-round">cached</span>
@@ -195,8 +210,16 @@ import { EmergencyHelpline } from '../../models/case.model';
                   <div class="btn-text-wrap">
                     <strong>Upload File</strong>
                     <span>Choose photo or video from device</span>
+                    <span class="file-size-limit-badge">
+                      <span class="material-icons-round limit-icon">rule</span>
+                      <span>File limit: <strong>Max 2 MB</strong></span>
+                    </span>
                   </div>
                 </button>
+              </div>
+              <div class="upload-limit-note">
+                <span class="material-icons-round note-icon">info</span>
+                <span>Supported formats: JPEG, PNG, WebP • <strong>Max image file size: 2 MB</strong> (automatically compressed for rapid upload)</span>
               </div>
               <input
                 #fileInput
@@ -595,6 +618,103 @@ import { EmergencyHelpline } from '../../models/case.model';
       gap: 2px;
       strong { font-size: 1.0625rem; font-weight: 800; }
       span { font-size: 0.8125rem; opacity: 0.85; }
+    }
+
+    .file-size-limit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+      padding: 3px 8px;
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+      border-radius: 6px;
+      font-size: 0.75rem !important;
+      font-weight: 600;
+      width: fit-content;
+
+      .limit-icon { font-size: 14px; color: #0284c7; }
+      strong { font-size: 0.75rem; color: #0369a1; font-weight: 800; }
+    }
+
+    .upload-limit-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      font-size: 0.8125rem;
+      color: #64748b;
+
+      .note-icon {
+        font-size: 18px;
+        color: #0d9488;
+        flex-shrink: 0;
+      }
+      strong {
+        color: #0f172a;
+      }
+    }
+
+    .media-upload-error-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      background: #fef2f2;
+      border: 1.5px solid #f87171;
+      color: #991b1b;
+
+      .alert-icon {
+        color: #dc2626;
+        font-size: 24px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      .alert-content-wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        font-size: 0.875rem;
+        line-height: 1.45;
+
+        .alert-heading {
+          font-weight: 800;
+          color: #b91c1c;
+        }
+        .alert-text {
+          color: #7f1d1d;
+        }
+      }
+
+      .btn-alert-close {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #991b1b;
+        padding: 2px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        opacity: 0.7;
+        &:hover { opacity: 1; background: rgba(0,0,0,0.06); }
+        .material-icons-round { font-size: 18px; }
+      }
+    }
+
+    .filesize-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-left: 6px;
     }
 
     /* Camera Viewport */
@@ -1455,6 +1575,9 @@ export class ReportComponent implements OnDestroy {
     if (input.files && input.files[0]) {
       this.handleFile(input.files[0]);
     }
+    if (input) {
+      input.value = '';
+    }
   }
 
   handleFile(file: File) {
@@ -1468,7 +1591,8 @@ export class ReportComponent implements OnDestroy {
       return;
     }
     if (isImage && file.size > 2 * 1024 * 1024) {
-      this.cameraError.set('Image exceeds the maximum allowed size of 2 MB. Please choose a photo under 2 MB.');
+      const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
+      this.cameraError.set(`Image exceeds the maximum allowed size of 2 MB (Selected file: ${sizeMb} MB). Please choose a photo under 2 MB.`);
       return;
     }
     if (file.size > 20 * 1024 * 1024) {
@@ -2120,10 +2244,26 @@ export class ReportComponent implements OnDestroy {
 
       // 1. Upload photo / video if present
       if (this.photoFile) {
+        if (this.photoFile.size > 2 * 1024 * 1024) {
+          const sizeMb = (this.photoFile.size / (1024 * 1024)).toFixed(2);
+          const sizeErr = `Image exceeds the maximum allowed size of 2 MB (Selected file: ${sizeMb} MB). Please choose a photo under 2 MB.`;
+          this.cameraError.set(sizeErr);
+          this.submissionError.set(sizeErr);
+          this.isSubmitting.set(false);
+          return;
+        }
         try {
           const uploadRes = await this.api.uploadPhoto(this.photoFile).toPromise();
           uploadedPhotoUrl = uploadRes?.url;
-        } catch {
+        } catch (err: any) {
+          const errMsg = err?.error?.message || err?.message || '';
+          if (errMsg.includes('2 MB')) {
+            const sizeErr = 'Image exceeds the maximum allowed size of 2 MB. Please choose a photo under 2 MB.';
+            this.cameraError.set(sizeErr);
+            this.submissionError.set(sizeErr);
+            this.isSubmitting.set(false);
+            return;
+          }
           console.warn('Photo/video upload failed, proceeding with local blob reference');
           uploadedPhotoUrl = this.photoPreviewUrl() || undefined;
         }

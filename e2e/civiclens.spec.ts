@@ -499,17 +499,22 @@ test.describe('CivicLens AI — End-to-End Suite', () => {
   test('E2E 18 — Image Restrictions: Image larger than 2MB is rejected with error banner', async ({ page }) => {
     await page.goto('/report');
 
-    // 1. Attempt to upload oversized image (2.5 MB)
+    // 1. Verify file size limit is displayed on the upload card and guidance note on UI
+    await expect(page.locator('.file-size-limit-badge')).toBeVisible();
+    await expect(page.locator('.file-size-limit-badge')).toContainText('Max 2 MB');
+    await expect(page.locator('.upload-limit-note')).toContainText('Max image file size: 2 MB');
+
+    // 2. Attempt to upload oversized image (2.5 MB)
     const fileChooserPromise = page.waitForEvent('filechooser');
     await page.click('button:has-text("Upload File")');
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(path.resolve(__dirname, 'fixtures/test_oversized.jpg'));
 
-    // 2. Verify client-side rejection error banner
+    // 3. Verify client-side rejection error banner
     await expect(page.locator('.alert-banner.warning')).toBeVisible();
     await expect(page.locator('.alert-banner.warning')).toContainText('Image exceeds the maximum allowed size of 2 MB');
 
-    // 3. Verify photo preview is not attached
+    // 4. Verify photo preview is not attached
     await expect(page.locator('.attached-media-preview')).not.toBeVisible();
   });
 
