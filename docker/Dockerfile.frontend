@@ -1,0 +1,19 @@
+# Multi-stage Dockerfile for CivicLens Angular Frontend (Production / Cloud Run)
+FROM node:20-alpine AS build
+WORKDIR /app
+
+COPY frontend/package*.json ./
+RUN npm ci
+
+COPY frontend/ ./
+RUN npm run build
+
+# Lightweight Node production proxy or nginx runner
+FROM node:20-alpine AS final
+WORKDIR /app
+COPY --from=build /app/dist/frontend/browser ./dist/frontend/browser
+COPY frontend/serve.js ./
+
+EXPOSE 4200
+ENV PORT=4200
+CMD ["node", "serve.js"]

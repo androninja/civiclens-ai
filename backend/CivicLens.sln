@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CivicLens.Api", "CivicLens.Api\CivicLens.Api.csproj", "{149ACD69-6613-4350-AF51-33D1C119D19B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CivicLens.Tests", "CivicLens.Tests\CivicLens.Tests.csproj", "{B70ED109-2B19-4283-B2D7-5226BDE25BD0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{149ACD69-6613-4350-AF51-33D1C119D19B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{149ACD69-6613-4350-AF51-33D1C119D19B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{149ACD69-6613-4350-AF51-33D1C119D19B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{149ACD69-6613-4350-AF51-33D1C119D19B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B70ED109-2B19-4283-B2D7-5226BDE25BD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B70ED109-2B19-4283-B2D7-5226BDE25BD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B70ED109-2B19-4283-B2D7-5226BDE25BD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B70ED109-2B19-4283-B2D7-5226BDE25BD0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Data Source=civiclens.db
+      - Gemini__ApiKey=${GEMINI_API_KEY:-}
+      - GoogleCloud__ProjectId=${GCP_PROJECT_ID:-civiclens-ai-2026}
+    volumes:
+      - civiclens_data:/app
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+
+volumes:
+  civiclens_data:
