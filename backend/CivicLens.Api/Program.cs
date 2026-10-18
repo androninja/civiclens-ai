@@ -176,6 +176,7 @@ var webRoot = app.Environment.WebRootPath ?? Path.Combine(app.Environment.Conten
 var uploadsDir = Path.Combine(webRoot, "uploads");
 Directory.CreateDirectory(uploadsDir);
 
+app.UseDefaultFiles();
 app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
@@ -193,15 +194,22 @@ app.MapControllers();
 app.MapGet("/api/admin/ratelimit-test", () => Results.Ok(new { message = "Request passed rate limiter", statusCode = 200 }))
    .RequireRateLimiting("TestRateLimiter");
 
-// Health check root endpoint
-app.MapGet("/", () => Results.Ok(new
+// SPA fallback or root API status
+if (File.Exists(Path.Combine(webRoot, "index.html")))
 {
-    app = "CivicLens AI — From Community Signal to Accountable Action",
-    status = "Active",
-    docs = "/swagger",
-    health = "/api/admin/status",
-    timestamp = DateTime.UtcNow
-}));
+    app.MapFallbackToFile("index.html");
+}
+else
+{
+    app.MapGet("/", () => Results.Ok(new
+    {
+        app = "CivicLens AI — From Community Signal to Accountable Action",
+        status = "Active",
+        docs = "/swagger",
+        health = "/api/admin/status",
+        timestamp = DateTime.UtcNow
+    }));
+}
 
 app.Run();
 

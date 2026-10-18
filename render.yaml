@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: civiclens-ai
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    healthCheckPath: /api/admin/status
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: GEMINI_API_KEY
+        sync: false
