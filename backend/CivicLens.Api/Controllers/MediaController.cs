@@ -24,7 +24,7 @@ public class MediaController : ControllerBase
     }
 
     [HttpPost("upload-photo")]
-    [Authorize]
+    [AllowAnonymous]
     [RequestSizeLimit(2 * 1024 * 1024)]
     public async Task<ActionResult<object>> UploadPhoto([FromForm] IFormFile file)
     {
@@ -66,7 +66,7 @@ public class MediaController : ControllerBase
     }
 
     [HttpPost("transcribe-voice")]
-    [Authorize]
+    [AllowAnonymous]
     [RequestSizeLimit(30 * 1024 * 1024)]
     public async Task<ActionResult<object>> TranscribeVoice(
         [FromForm] IFormFile audio,

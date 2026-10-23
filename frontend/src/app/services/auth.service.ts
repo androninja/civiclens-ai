@@ -9,7 +9,7 @@ const DEMO_CITIZEN: AuthUser = {
   fullName: 'Ananya Sharma (Citizen)',
   role: 'Citizen',
   email: 'citizen@civiclens.local',
-  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3ItY2l0aXplbi0wMSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoidXNyLWNpdGl6ZW4tMDEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiY2l0aXplbiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImNpdGl6ZW5AY2l2aWNsZW5zLmxvY2FsIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2l0aXplbiIsIkZ1bGxOYW1lIjoiQW5hbnlhIFNoYXJtYSAoQ2l0aXplbikiLCJleHAiOjE3OTI2MDUzMTksImlzcyI6IkNpdmljTGVuc0FwaSIsImF1ZCI6IkNpdmljTGVuc0NsaWVudCJ9.ftL9RdpPv5nkURwd-z8PROZq5BdX_wVcnwMa0y8NLMc'
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3ItY2l0aXplbi0wMSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoidXNyLWNpdGl6ZW4tMDEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiY2l0aXplbiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImNpdGl6ZW5AY2l2aWNsZW5zLmxvY2FsIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2l0aXplbiIsIkZ1bGxOYW1lIjoiQW5hbnlhIFNoYXJtYSAoQ2l0aXplbikiLCJleHAiOjE3OTMzODY4MTAsImlzcyI6IkNpdmljTGVuc0FwaSIsImF1ZCI6IkNpdmljTGVuc0NsaWVudCJ9.hL4eJhwf0s0HqfVXDTaYPD7XjZUQkQgYXwg_iiOAVZk'
 };
 
 const DEMO_REVIEWER: AuthUser = {
@@ -18,7 +18,7 @@ const DEMO_REVIEWER: AuthUser = {
   fullName: 'Vikram Patel (Municipal Reviewer)',
   role: 'Reviewer',
   email: 'reviewer@civiclens.local',
-  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3ItcmV2aWV3ZXItMDEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6InVzci1yZXZpZXdlci0wMSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJyZXZpZXdlciIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InJldmlld2VyQGNpdmljbGVucy5sb2NhbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlJldmlld2VyIiwiRnVsbE5hbWUiOiJWaWtyYW0gUGF0ZWwgKE11bmljaXBhbCBSZXZpZXdlcikiLCJleHAiOjE3OTI2MDU2ODQsImlzcyI6IkNpdmljTGVuc0FwaSIsImF1ZCI6IkNpdmljTGVuc0NsaWVudCJ9.qs0l219p76f7-nhRc7WhZy2KDz4YDZlrJgyh5FFSXqg'
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3ItcmV2aWV3ZXItMDEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6InVzci1yZXZpZXdlci0wMSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJyZXZpZXdlciIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InJldmlld2VyQGNpdmljbGVucy5sb2NhbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlJldmlld2VyIiwiRnVsbE5hbWUiOiJWaWtyYW0gUGF0ZWwgKE11bmljaXBhbCBSZXZpZXdlcikiLCJleHAiOjE3OTMzODcxMjEsImlzcyI6IkNpdmljTGVuc0FwaSIsImF1ZCI6IkNpdmljTGVuc0NsaWVudCJ9.-d0cjsIh72f8oNnPcQ8JikTKUPCOO6fMruoUH3RmQCU'
 };
 
 const DEMO_ADMIN: AuthUser = {
@@ -27,7 +27,7 @@ const DEMO_ADMIN: AuthUser = {
   fullName: 'Civic Operations Admin',
   role: 'Administrator',
   email: 'admin@civiclens.local',
-  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3ItYWRtaW4tMDEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6InVzci1hZG1pbi0wMSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFkbWluQGNpdmljbGVucy5sb2NhbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmF0b3IiLCJGdWxsTmFtZSI6IkNpdmljIE9wZXJhdGlvbnMgQWRtaW4iLCJleHAiOjE3OTI2MDUzMTksImlzcyI6IkNpdmljTGVuc0FwaSIsImF1ZCI6IkNpdmljTGVuc0NsaWVudCJ9.4P_m162q0J3gT0vT13d81zELeQO3lR_qO0P-s-sRkZg'
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3ItYWRtaW4tMDEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6InVzci1hZG1pbi0wMSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFkbWluQGNpdmljbGVucy5sb2NhbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmF0b3IiLCJGdWxsTmFtZSI6IkNpdmljIE9wZXJhdGlvbnMgQWRtaW4iLCJleHAiOjE3OTMzODcxMjMsImlzcyI6IkNpdmljTGVuc0FwaSIsImF1ZCI6IkNpdmljTGVuc0NsaWVudCJ9.Ow98whMil6q4xBrLjXIMoee1n5qv-5aZKMjZsPpd9o8'
 };
 
 @Injectable({
@@ -42,12 +42,25 @@ export class AuthService {
     this.loadStoredUser();
   }
 
+  isTokenExpired(token: string | null | undefined): boolean {
+    if (!token) return true;
+    try {
+      const parts = token.split('.');
+      if (parts.length !== 3) return true;
+      const payload = JSON.parse(atob(parts[1]));
+      if (!payload.exp) return false;
+      return payload.exp * 1000 < Date.now();
+    } catch {
+      return true;
+    }
+  }
+
   private loadStoredUser() {
     const raw = localStorage.getItem('civiclens_user');
     if (raw) {
       try {
         const user = JSON.parse(raw);
-        if (user && user.token) {
+        if (user && user.token && !this.isTokenExpired(user.token)) {
           this.currentUser.set(user);
           return;
         }
@@ -99,7 +112,15 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return this.currentUser().token;
+    const user = this.currentUser();
+    if (user && user.token && !this.isTokenExpired(user.token)) {
+      return user.token;
+    }
+    if (DEMO_CITIZEN && !this.isTokenExpired(DEMO_CITIZEN.token)) {
+      this.currentUser.set(DEMO_CITIZEN);
+      return DEMO_CITIZEN.token;
+    }
+    return null;
   }
 
   isCitizen(): boolean {

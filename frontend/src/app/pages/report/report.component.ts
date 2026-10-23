@@ -85,6 +85,48 @@ import { EmergencyHelpline } from '../../models/case.model';
         </div>
       }
 
+      <!-- Location Prompt Modal Before Submitting -->
+      @if (showLocationPromptModal()) {
+        <div class="location-prompt-overlay" (click)="dismissLocationPrompt()">
+          <div class="location-prompt-modal" (click)="$event.stopPropagation()">
+            <div class="loc-prompt-icon-wrap">
+              <span class="material-icons-round loc-prompt-pin">my_location</span>
+            </div>
+            <h2>Set Incident Location</h2>
+            <p class="loc-prompt-desc">
+              Municipal emergency response teams require an exact location to dispatch repair crews and verify the problem site. Would you like to share your location before submitting?
+            </p>
+
+            @if (locationPromptError()) {
+              <div class="loc-prompt-alert">
+                <span class="material-icons-round">error_outline</span>
+                <span>{{ locationPromptError() }}</span>
+              </div>
+            }
+
+            <div class="loc-prompt-btn-group">
+              <button type="button" class="btn btn-primary btn-block btn-lg" (click)="shareGpsAndSubmit()" [disabled]="isLocatingGps()">
+                @if (isLocatingGps()) {
+                  <span class="material-icons-round spin">sync</span>
+                  <span>Detecting GPS Location...</span>
+                } @else {
+                  <span class="material-icons-round">near_me</span>
+                  <span>Share Current GPS Location & Submit</span>
+                }
+              </button>
+              <button type="button" class="btn btn-secondary btn-block" (click)="chooseToPinMap()">
+                <span class="material-icons-round">map</span>
+                <span>Pick on Map / Enter Address</span>
+              </button>
+              <button type="button" class="btn btn-outline btn-block text-muted" (click)="submitWithoutLocation()">
+                <span class="material-icons-round">arrow_forward</span>
+                <span>Skip & Submit Without Location</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+
       <!-- Header -->
       <div class="report-header">
         <div class="badge badge-status-needs-review">Citizen Reporting Portal</div>
@@ -414,7 +456,7 @@ import { EmergencyHelpline } from '../../models/case.model';
                   <span>Use My Location (GPS)</span>
                 </button>
               </div>
-              <p class="loc-hint">You can pin your location here, or skip this: you'll be prompted to share your location after submitting.</p>
+              <p class="loc-hint">Pin your location on the map or click 'Use My Location'. If not set, you will be prompted to set your location upon submitting.</p>
 
               <div class="form-group compact-address">
                 <input
@@ -473,7 +515,7 @@ import { EmergencyHelpline } from '../../models/case.model';
               </div>
               <div class="check-item" [class.complete]="latitude !== null && longitude !== null">
                 <span class="material-icons-round">{{ latitude !== null && longitude !== null ? 'check_circle' : 'info' }}</span>
-                <span>Location: {{ latitude ? 'Pinned' : 'Prompted after submit' }}</span>
+                <span>Location: {{ latitude ? 'Pinned' : 'Prompted on submit' }}</span>
               </div>
             </div>
 
@@ -1372,6 +1414,81 @@ import { EmergencyHelpline } from '../../models/case.model';
       transition: all 0.3s ease;
     }
 
+    /* Location Prompt Modal Before Submitting */
+    .location-prompt-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.25s ease-out;
+    }
+    .location-prompt-modal {
+      background: #ffffff;
+      border-radius: 20px;
+      max-width: 480px;
+      width: 100%;
+      padding: 32px 28px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+      text-align: center;
+      h2 {
+        font-size: 1.375rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-top: 16px;
+        margin-bottom: 8px;
+      }
+    }
+    .loc-prompt-icon-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #ccfbf1;
+      color: #0d9488;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      .loc-prompt-pin { font-size: 36px; }
+    }
+    .loc-prompt-desc {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .loc-prompt-alert {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fef2f2;
+      border: 1px solid #fee2e2;
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #b91c1c;
+      font-size: 0.813rem;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    .loc-prompt-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 48px;
+        font-weight: 700;
+        font-size: 0.875rem;
+      }
+    }
+
     @keyframes pulse { from { opacity: 0.4; } to { opacity: 1; } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   `]
@@ -1426,6 +1543,11 @@ export class ReportComponent implements OnDestroy {
   ambiguousAudioTranscript = signal<string>('');
   ambiguousAudioQualityNote = signal<string | null>(null);
   liveEmergencyTrigger = signal<{ type: string; helplines: EmergencyHelpline[] } | null>(null);
+
+  // Location prompt modal before submitting
+  showLocationPromptModal = signal(false);
+  isLocatingGps = signal(false);
+  locationPromptError = signal<string | null>(null);
 
   private mediaRecorder: MediaRecorder | null = null;
   private audioChunks: Blob[] = [];
@@ -2111,8 +2233,21 @@ export class ReportComponent implements OnDestroy {
           this.showAudioNudgeModal.set(true);
         }
       },
-      error: () => {
+      error: (err: any) => {
         this.isTranscribing.set(false);
+        console.warn('Backend audio transcription returned error:', err);
+        const live = this.liveSpeechTranscript().trim();
+        if (live) {
+          this.transcript.set(live);
+          this.transcriptProvider.set('Browser Speech Recognition (Live Fallback)');
+          if (!this.description.trim() || this.description === this.lastAutoDescription) {
+            this.description = live;
+            this.lastAutoDescription = live;
+          }
+          this.autoSelectCategory(live);
+        } else {
+          this.transcriptionError.set('Could not transcribe audio. Please speak clearly, type description, or re-record.');
+        }
       }
     });
   }
@@ -2237,6 +2372,60 @@ export class ReportComponent implements OnDestroy {
       return;
     }
 
+    // Prompt for location before submitting if location coordinates or address are not provided
+    if ((!this.latitude || !this.longitude) && !this.locationAddress.trim()) {
+      this.locationPromptError.set(null);
+      this.showLocationPromptModal.set(true);
+      return;
+    }
+
+    await this.executeSubmit();
+  }
+
+  shareGpsAndSubmit() {
+    this.locationPromptError.set(null);
+    if (!navigator.geolocation) {
+      this.locationPromptError.set('Geolocation is not supported by your browser. You can pick on the map or skip.');
+      return;
+    }
+
+    this.isLocatingGps.set(true);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        this.latitude = parseFloat(pos.coords.latitude.toFixed(5));
+        this.longitude = parseFloat(pos.coords.longitude.toFixed(5));
+        this.locationAddress = `GPS Location: ${this.latitude}, ${this.longitude}`;
+        this.isLocatingGps.set(false);
+        this.showLocationPromptModal.set(false);
+        await this.executeSubmit();
+      },
+      (err) => {
+        this.isLocatingGps.set(false);
+        this.locationPromptError.set(`Could not retrieve GPS location (${err.message}). You can pick on the map or skip.`);
+      },
+      { timeout: 10000, enableHighAccuracy: true }
+    );
+  }
+
+  chooseToPinMap() {
+    this.showLocationPromptModal.set(false);
+    setTimeout(() => {
+      const mapEl = document.querySelector('.simulated-map') || document.querySelector('#addressInput');
+      mapEl?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      (document.querySelector('#addressInput') as HTMLInputElement)?.focus();
+    }, 100);
+  }
+
+  async submitWithoutLocation() {
+    this.showLocationPromptModal.set(false);
+    await this.executeSubmit();
+  }
+
+  dismissLocationPrompt() {
+    this.showLocationPromptModal.set(false);
+  }
+
+  async executeSubmit() {
     this.isSubmitting.set(true);
 
     try {

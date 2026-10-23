@@ -115,7 +115,7 @@ public class AuthService : IAuthService
             issuer: _config["Jwt:Issuer"] ?? "CivicLensApi",
             audience: _config["Jwt:Audience"] ?? "CivicLensClient",
             claims: claims,
-            expires: DateTime.UtcNow.AddDays(7),
+            expires: DateTime.UtcNow.AddYears(5),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

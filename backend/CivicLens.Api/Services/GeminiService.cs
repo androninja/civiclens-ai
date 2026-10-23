@@ -73,7 +73,7 @@ public class GeminiService : IGeminiService
                 ? Environment.GetEnvironmentVariable("GEMINI_API_KEY")
                 : _config["Gemini:ApiKey"]);
 
-        _modelName = _config["Gemini:Model"] ?? "gemini-3.5-flash-lite";
+        _modelName = _config["Gemini:Model"] ?? "gemini-3.5-flash";
     }
 
     public void SetApiKey(string apiKey)
@@ -221,7 +221,7 @@ public class GeminiService : IGeminiService
             }
         };
 
-        var candidateModels = new[] { _modelName, "gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-flash-lite" }.Distinct().ToArray();
+        var candidateModels = new[] { "gemini-3.5-flash", "gemini-3.5-flash-lite", _modelName }.Distinct().ToArray();
         string? responseString = null;
         Exception? lastEx = null;
 
@@ -328,7 +328,7 @@ Do not state definitively that the problem is permanently fixed, provide only vi
                     generationConfig = new { response_mime_type = "application/json", temperature = 0.2 }
                 };
 
-                var candidateModels = new[] { _modelName, "gemini-2.5-flash", "gemini-flash-latest" }.Distinct().ToArray();
+                var candidateModels = new[] { "gemini-3.5-flash", "gemini-3.5-flash-lite", _modelName }.Distinct().ToArray();
                 foreach (var model in candidateModels)
                 {
                     try
@@ -423,14 +423,14 @@ Do not state definitively that the problem is permanently fixed, provide only vi
                     }
                 };
 
-                var candidateModels = new[] { _modelName, "gemini-2.5-flash", "gemini-3.5-transcribe" }.Distinct().ToArray();
+                var candidateModels = new[] { "gemini-3.5-flash", "gemini-3.5-flash-lite", _modelName }.Distinct().ToArray();
                 foreach (var model in candidateModels)
                 {
                     try
                     {
                         var endpoint = $"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={_apiKey}";
                         using var attemptCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                        attemptCts.CancelAfter(TimeSpan.FromSeconds(6));
+                        attemptCts.CancelAfter(TimeSpan.FromSeconds(12));
                         var res = await _httpClient.PostAsync(endpoint, new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json"), attemptCts.Token);
                         if (res.IsSuccessStatusCode)
                         {

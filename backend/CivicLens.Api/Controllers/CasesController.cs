@@ -55,7 +55,7 @@ public class CasesController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
+    [AllowAnonymous]
     public async Task<ActionResult<CivicCase>> CreateCase([FromBody] CreateCaseRequest request)
     {
         try
